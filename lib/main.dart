@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:provider/provider.dart';
-import 'screens/screens.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'services/services.dart';
+import 'screens/screens.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => LoginScreen(),
           // '/topics': (context) => TopicsScreen(),
-          // '/profile': (context) => ProfileScreen(),
+          '/profile': (context) => ProfileScreen(),
           '/about': (context) => AboutScreen(),
         },
 
