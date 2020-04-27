@@ -26,3 +26,32 @@ class Document<T> {
   }
 }
 
+class UserData<T> {
+  final Firestore _db = Firestore.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final String collection;
+
+  UserData({ this.collection });
+
+  Stream<T> get documentStream {
+    return _auth.onAuthStateChanged.switchMap((user) {
+      if (user != null) {
+        Document<T> doc = Document<T>(path: '$collection/${user.uid}');
+        return doc.streamData();
+      } else {
+        return Stream<T>.value(null);
+      }
+    });
+  }
+
+  Future<T> getDocument() async {
+    FirebaseUser user = await _auth.currentUser();
+
+    if(user != null) {
+      Document doc = Document<T>(path: '$collection/${user.uid}');
+      return doc.getData();
+    } else {
+      return null;
+    }
+  }
+}
